@@ -10,16 +10,21 @@ import {
 interface ICaseProps {
   id: string;
 }
-//
-// const HelloBlock = styled.div`
-//   padding: 10px;
-//   margin: 5px;
-//   width: 20%;
-//   ${(props: IHelloBlockProps) => `
-//     background: palevioletred;
-//     color: ${props.color};
-//   `}
-// `;
+
+// ${(props: IHelloBlockProps) => `
+//   background: palevioletred;
+//   color: ${props.color};
+// `}
+
+const HeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+`;
+const AppWrapper = styled.div`
+  padding: 0% 10%;
+`;
 
 const Index = () => {
   return <h2>Home</h2>;
@@ -29,20 +34,35 @@ const Case = ({ match }: RouteComponentProps<ICaseProps>) => {
   return <h2>This is a page for case with ID: {match.params.id} </h2>;
 };
 
-function AppRouter() {
-  return (
-    <div>
-      <Router>
-        <Route path="/" exact component={Index} />
-        <Route path="/case/:id" component={Case} />
-      </Router>
+const Header = (
+  <HeaderWrapper>
+    <img style={{ height: "100px" }} src="/fav.ico" />{" "}
+    <div style={{ marginLeft: "20px" }}>
+      <div style={{ fontSize: "90px", marginBottom: "-20px" }}>
+        Police Department of Berlin
+      </div>
+      <div style={{ fontSize: "50px" }}>Stolen bykes</div>
     </div>
-  );
-}
+  </HeaderWrapper>
+);
+
+const AppRouter = (
+  <div>
+    <Router>
+      <Route path="/" exact component={Index} />
+      <Route path="/case/:id" component={Case} />
+    </Router>
+  </div>
+);
 
 class App extends React.PureComponent {
   render() {
-    return <div className="App">{AppRouter()}</div>;
+    return (
+      <AppWrapper>
+        {Header}
+        {AppRouter}
+      </AppWrapper>
+    );
   }
 }
 
