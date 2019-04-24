@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "./theme/index";
+import { get } from "./helpers/fetcher.js";
 import {
   BrowserRouter as Router,
   Route,
@@ -56,6 +57,11 @@ const AppRouter = (
 );
 
 class App extends React.PureComponent {
+  componentDidMount() {
+    get(
+      "https://bikewise.org:443/api/v2/incidents?page=1&per_page=10&proximity_square=100"
+    ).then(console.log);
+  }
   render() {
     return (
       <AppWrapper>
