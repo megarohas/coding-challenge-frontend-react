@@ -2,6 +2,7 @@ import * as React from "react";
 
 import styled from "../../theme/index";
 import { get } from "../../helpers/fetcher.js";
+import CaseListItem from "../case_list_item/case_list_item";
 
 type CaseObgect = {
   title: string;
@@ -35,12 +36,7 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
   }
 
   renderCases = () => {
-    return this.state.cases.map((item, index) => (
-      <div>
-        <div>{`Case: ${item.title}`}</div>
-        <img src={item.thumbnail_img} />
-      </div>
-    ));
+    return this.state.cases.map((item, index) => <CaseListItem case={item} />);
   };
   render() {
     return <div>{this.renderCases()}</div>;
