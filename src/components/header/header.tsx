@@ -1,5 +1,5 @@
 import * as React from "react";
-import styled from "../../theme/index";
+import styled from "../../theme";
 
 const HeaderWrapper = styled.div`
   display: flex;

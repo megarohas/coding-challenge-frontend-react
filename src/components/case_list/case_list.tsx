@@ -1,5 +1,5 @@
 import * as React from "react";
-import styled from "../../theme/index";
+import styled from "../../theme";
 import { TCase } from "../../types";
 import CaseListItem from "../case_list_item/case_list_item";
 

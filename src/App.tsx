@@ -1,5 +1,5 @@
 import * as React from "react";
-import styled from "./theme/index";
+import styled from "./theme";
 import { get } from "./helpers/fetcher.js";
 import IndexPage from "./components/index_page/index_page";
 import Header from "./components/header/header";
