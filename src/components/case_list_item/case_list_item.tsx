@@ -3,14 +3,14 @@ import * as React from "react";
 import styled from "../../theme/index";
 import { get } from "../../helpers/fetcher.js";
 
-type CaseObgect = {
+type CaseObject = {
   title: string;
   description: string;
   id: number;
   thumbnail_img: string;
 };
 interface ICaseListItemProps {
-  case: CaseObgect;
+  case: CaseObject;
 }
 
 class CaseListItem extends React.PureComponent<ICaseListItemProps> {

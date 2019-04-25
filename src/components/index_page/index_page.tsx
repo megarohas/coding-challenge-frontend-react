@@ -3,21 +3,23 @@ import * as React from "react";
 import styled from "../../theme/index";
 import { get } from "../../helpers/fetcher.js";
 import CaseListItem from "../case_list_item/case_list_item";
+import CaseList from "../case_list/case_list";
 
-type CaseObgect = {
+type CaseObject = {
   title: string;
   description: string;
   id: number;
   thumbnail_img: string;
 };
 interface IIndexPageState {
-  cases: Array<CaseObgect>;
+  cases: Array<CaseObject>;
 }
 
 class IndexPage extends React.PureComponent<{}, IIndexPageState> {
   state: IIndexPageState = {
     cases: []
   };
+
   componentDidMount() {
     get(
       "https://bikewise.org:443/api/v2/incidents?page=1&per_page=10&proximity_square=100"
@@ -35,11 +37,12 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
     });
   }
 
-  renderCases = () => {
-    return this.state.cases.map((item, index) => <CaseListItem case={item} />);
-  };
   render() {
-    return <div>{this.renderCases()}</div>;
+    return (
+      <div>
+        <CaseList cases={this.state.cases} />
+      </div>
+    );
   }
 }
 
