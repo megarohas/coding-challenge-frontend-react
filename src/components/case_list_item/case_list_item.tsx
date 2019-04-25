@@ -12,6 +12,11 @@ const CaseListItemWrapper = styled.div`
   border: 3px solid black;
   margin-bottom: 20px;
 `;
+const CaseListItemInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 const CaseImg = styled.img`
   width: 100px;
   height: 100px;
@@ -26,10 +31,15 @@ class CaseListItem extends React.PureComponent<ICaseListItemProps> {
     return (
       <CaseListItemWrapper>
         <CaseImg src={_case.thumbnail_img} alt="N/A" />
-        <div>
-          <a href={`/case/${_case.id}`}>{`Case: ${_case.title}`}</a>
-          <div>{`Desc: ${_case.description}`}</div>
-        </div>
+        <CaseListItemInfoWrapper>
+          <div>
+            <a href={`/case/${_case.id}`}>{`Case: ${_case.title}`}</a>
+            <div>{`Desc: ${_case.description}`}</div>
+          </div>
+          <div style={{ marginTop: "10px" }}>
+            {`${_case.occurred_at} - ${_case.address}`}
+          </div>
+        </CaseListItemInfoWrapper>
       </CaseListItemWrapper>
     );
   }

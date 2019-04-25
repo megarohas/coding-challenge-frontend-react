@@ -3,4 +3,6 @@ export type TCase = {
   description: string;
   id: number;
   thumbnail_img: string;
+  address: string;
+  occurred_at: string;
 };
