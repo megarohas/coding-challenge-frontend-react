@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "./theme/index";
 import { get } from "./helpers/fetcher.js";
+import IndexPage from "./components/index_page/index_page";
 import {
   BrowserRouter as Router,
   Route,
@@ -37,12 +38,12 @@ const Case = ({ match }: RouteComponentProps<ICaseProps>) => {
 
 const Header = (
   <HeaderWrapper>
-    <img style={{ height: "100px" }} src="/fav.ico" />{" "}
+    <img style={{ height: "60px" }} src="/fav.ico" />{" "}
     <div style={{ marginLeft: "20px" }}>
-      <div style={{ fontSize: "90px", marginBottom: "-20px" }}>
+      <div style={{ fontSize: "55px", marginBottom: "-20px" }}>
         Police Department of Berlin
       </div>
-      <div style={{ fontSize: "50px" }}>Stolen bykes</div>
+      <div style={{ fontSize: "30px" }}>Stolen bykes</div>
     </div>
   </HeaderWrapper>
 );
@@ -50,7 +51,7 @@ const Header = (
 const AppRouter = (
   <div>
     <Router>
-      <Route path="/" exact component={Index} />
+      <Route path="/" exact component={IndexPage} />
       <Route path="/case/:id" component={Case} />
     </Router>
   </div>
