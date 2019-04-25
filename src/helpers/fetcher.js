@@ -1,10 +1,10 @@
 const CON_TIMEOUT = 999999999;
 
-// function queryParams(params) {
-//   return Object.keys(params)
-//     .map(k => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))
-//     .join("&");
-// }
+export function genParams(params) {
+  return Object.keys(params)
+    .map(k => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))
+    .join("&");
+}
 
 function checkStatus(response, resolve, reject) {
   if (response.status >= 200 && response.status < 300) {
