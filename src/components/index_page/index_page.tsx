@@ -4,6 +4,7 @@ import { get } from "../../helpers/fetcher.js";
 import CaseListItem from "../case_list_item/case_list_item";
 import CaseList from "../case_list/case_list";
 import { TCase } from "../../types";
+import { parseIncedents } from "../../helpers/parse_incedents";
 
 interface IIndexPageState {
   cases: Array<TCase>;
@@ -20,14 +21,7 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
     ).then(response => {
       console.log("cases:", response.incidents);
       this.setState({
-        cases: response.incidents.map((item: any) => {
-          return {
-            title: item.title,
-            description: item.description,
-            id: item.id,
-            thumbnail_img: item.media.image_url_thumb
-          };
-        })
+        cases: parseIncedents(response.incidents)
       });
     });
   }
