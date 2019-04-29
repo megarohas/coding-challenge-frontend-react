@@ -4,5 +4,5 @@ export type TCase = {
   id: number;
   thumbnail_img: string;
   address: string;
-  occurred_at: string;
+  occurred_at: number;
 };

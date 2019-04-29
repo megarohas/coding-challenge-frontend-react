@@ -5,6 +5,7 @@ import CaseListItem from "../case_list_item/case_list_item";
 import CaseList from "../case_list/case_list";
 import CaseCount from "../case_count/case_count";
 import FindCasesBar from "../find_cases_bar/find_cases_bar";
+import Paginator from "../paginator/paginator";
 import { TCase } from "../../types";
 import { parseIncedents } from "../../helpers/parse_incedents";
 import { genParams } from "../../helpers/fetcher";
@@ -17,6 +18,7 @@ interface IIndexPageState {
   occurred_after: string;
   occurred_before: string;
   page: number;
+  total_pages: number;
   proximity: string;
   incident_type: string;
 }
@@ -31,11 +33,33 @@ type TCaseRequestProps = {
   incident_type: string;
 };
 
+type TPaginateCasesProps = {
+  cases: Array<TCase>;
+  page: number;
+  per_page: number;
+};
+type TCalculateTotalPagesProps = {
+  cases: Array<TCase>;
+  per_page: number;
+};
+
+function paginateCases(props: TPaginateCasesProps) {
+  let max: number = props.per_page * props.page - 1;
+  let min: number = props.per_page * props.page - props.per_page;
+  let inRange = (index: number) => index <= max && index >= min;
+  return props.cases.filter((item: TCase, index: number) => inRange(index));
+}
+
+function calcTotalPages(props: TCalculateTotalPagesProps) {
+  return Math.ceil(props.cases.length / props.per_page);
+}
+
 class IndexPage extends React.PureComponent<{}, IIndexPageState> {
   state: IIndexPageState = {
     cases: [],
     all_cases: [],
-    per_page: 1000000000000000000,
+    per_page: 5,
+    total_pages: 1,
     query: "",
     occurred_before: "",
     occurred_after: "",
@@ -48,9 +72,18 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
     get(`https://bikewise.org:443/api/v2/incidents?${genParams(props)}`).then(
       response => {
         console.log("cases:", response.incidents);
+        let _cases: Array<TCase> = parseIncedents(response.incidents);
         this.setState({
-          cases: parseIncedents(response.incidents),
-          all_cases: parseIncedents(response.incidents)
+          total_pages: calcTotalPages({
+            cases: _cases,
+            per_page: this.state.per_page
+          }),
+          cases: paginateCases({
+            cases: _cases,
+            page: this.state.page,
+            per_page: this.state.per_page
+          }),
+          all_cases: _cases
         });
       }
     );
@@ -59,7 +92,7 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
   componentDidMount() {
     this.getCases({
       query: "",
-      per_page: this.state.per_page,
+      per_page: 1000000000000000000,
       occurred_before: "",
       occurred_after: "",
       page: 1,
@@ -81,7 +114,7 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
               () =>
                 this.getCases({
                   query: this.state.query,
-                  per_page: this.state.per_page,
+                  per_page: 1000000000000000000,
                   occurred_before: this.state.occurred_before,
                   occurred_after: this.state.occurred_after,
                   page: 1,
@@ -92,6 +125,20 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
           }}
         />
         <CaseCount case_count={this.state.all_cases.length} />
+        <Paginator
+          page={this.state.page}
+          total_pages={this.state.total_pages}
+          setPage={(page: number) =>
+            this.setState({
+              page,
+              cases: paginateCases({
+                cases: this.state.all_cases,
+                page: page,
+                per_page: this.state.per_page
+              })
+            })
+          }
+        />
         <CaseList cases={this.state.cases} />
       </React.Fragment>
     );

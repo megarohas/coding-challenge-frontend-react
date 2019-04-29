@@ -28,7 +28,7 @@ const CaseImg = styled.img`
 class CaseListItem extends React.PureComponent<ICaseListItemProps> {
   render() {
     const _case: TCase = this.props.case;
-    const _date: Date = new Date(parseInt(_case.occurred_at) * 1000);
+    const _date: Date = new Date(_case.occurred_at * 1000);
     return (
       <CaseListItemWrapper>
         <CaseImg src={_case.thumbnail_img} alt="N/A" />

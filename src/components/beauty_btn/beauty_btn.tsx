@@ -4,18 +4,22 @@ import styled from "../../theme";
 interface IBeautyBtnProps {
   value: string;
   doAction(): void;
+  inActive?: boolean;
 }
 const BeautyBtnWrapper = styled.div`
+  color:${(props: any) => (props.inActive ? "white;" : "black;")}
+  background-color:${(props: any) => (props.inActive ? "black;" : "white;")}
+  cursor: ${(props: any) => (props.inActive ? "not-allowed;" : "pointer;")}
+  box-shadow: ${(props: any) =>
+    props.inActive ? "none" : "3px 3px 0px rgba(0, 0, 0, 1);"}
   border: 3px solid black;
   font-family: inherit;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 5px 8px;
-  box-shadow: 3px 3px 0px rgba(0, 0, 0, 1);
   font-size: 20px;
   user-select: none;
-  cursor: pointer;
   &:active {
     background-color: black;
     box-shadow: 0px 0px 0px rgba(0, 0, 0, 1);
@@ -27,6 +31,7 @@ class BeautyBtn extends React.PureComponent<IBeautyBtnProps> {
   render() {
     return (
       <BeautyBtnWrapper
+        inActive={this.props.inActive}
         onClick={() => {
           this.props.doAction();
         }}
