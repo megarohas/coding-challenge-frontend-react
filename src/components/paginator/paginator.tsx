@@ -29,18 +29,46 @@ class Paginator extends React.PureComponent<IPaginatorProps> {
     );
   }
 
+  generateIndexes() {
+    let pages = [];
+
+    if (this.props.total_pages === 0) {
+      return [];
+    } else if (this.props.total_pages === 1) {
+      return [1];
+    } else if (this.props.total_pages === 2) {
+      return [1, 2];
+    } else if (this.props.total_pages === 3) {
+      return [1, 2, 3];
+    } else if (this.props.total_pages === this.props.page) {
+      return [this.props.page - 2, this.props.page - 1, this.props.page];
+    } else if (this.props.page === 1) {
+      return [this.props.page, this.props.page + 1, this.props.page + 2];
+    } else {
+      return [this.props.page - 1, this.props.page, this.props.page + 1];
+    }
+    return [];
+    // let per_page: number = 3;
+    // let max: number = per_page * props.page;
+    // let min: number = props.per_page * props.page - props.per_page;
+  }
+
   renderPages() {
-    let pages = new Array(this.props.total_pages).fill(this.props.total_pages);
+    let pages = new Array(3).fill(3);
     console.log("pages", pages);
     console.log("pages", pages);
-    return pages.map((item: number, index: number) => {
-      console.log("page");
-      return this.renderPage({
-        page: index + 1,
-        total_pages: this.props.total_pages,
-        setPage: this.props.setPage
-      });
-    });
+    let indexes: Array<number> = [];
+    indexes = this.generateIndexes();
+    return (
+      indexes.map((item: number) => {
+        console.log("page");
+        return this.renderPage({
+          page: item,
+          total_pages: this.props.total_pages,
+          setPage: this.props.setPage
+        });
+      }) || []
+    );
   }
   render() {
     console.log("this.props", this.props);
