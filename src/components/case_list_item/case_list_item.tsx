@@ -28,6 +28,8 @@ const CaseImg = styled.img`
 class CaseListItem extends React.PureComponent<ICaseListItemProps> {
   render() {
     const _case: TCase = this.props.case;
+    console.log(_case.occurred_at);
+    const _date: Date = new Date(parseInt(_case.occurred_at) * 1000);
     return (
       <CaseListItemWrapper>
         <CaseImg src={_case.thumbnail_img} alt="N/A" />
@@ -37,7 +39,7 @@ class CaseListItem extends React.PureComponent<ICaseListItemProps> {
             <div>{`Desc: ${_case.description}`}</div>
           </div>
           <div style={{ marginTop: "10px" }}>
-            {`${_case.occurred_at} - ${_case.address}`}
+            {`${_date.toDateString()} - ${_case.address}`}
           </div>
         </CaseListItemInfoWrapper>
       </CaseListItemWrapper>
