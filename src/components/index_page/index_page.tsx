@@ -15,6 +15,8 @@ interface IIndexPageState {
   occurred_after: string;
   occurred_before: string;
   page: number;
+  proximity: string;
+  incident_type: string;
 }
 
 type TCaseRequestProps = {
@@ -23,6 +25,8 @@ type TCaseRequestProps = {
   occurred_before: string;
   occurred_after: string;
   page: number;
+  proximity: string;
+  incident_type: string;
 };
 
 class IndexPage extends React.PureComponent<{}, IIndexPageState> {
@@ -32,7 +36,9 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
     query: "",
     occurred_before: "",
     occurred_after: "",
-    page: 1
+    page: 1,
+    proximity: "52.517038,13.401267",
+    incident_type: "theft"
   };
 
   getCases(props: TCaseRequestProps) {
@@ -54,7 +60,9 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
       per_page: this.state.per_page,
       occurred_before: "",
       occurred_after: "",
-      page: 1
+      page: 1,
+      proximity: this.state.proximity,
+      incident_type: this.state.incident_type
     });
   }
 
@@ -73,7 +81,9 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
                 per_page: this.state.per_page,
                 occurred_before: this.state.occurred_before,
                 occurred_after: this.state.occurred_after,
-                page: this.state.page
+                page: this.state.page,
+                proximity: this.state.proximity,
+                incident_type: this.state.incident_type
               })
             );
           }}
