@@ -3,6 +3,7 @@ import styled from "../../theme";
 import { get } from "../../helpers/fetcher.js";
 import CaseListItem from "../case_list_item/case_list_item";
 import CaseList from "../case_list/case_list";
+import CaseCount from "../case_count/case_count";
 import FindCasesBar from "../find_cases_bar/find_cases_bar";
 import { TCase } from "../../types";
 import { parseIncedents } from "../../helpers/parse_incedents";
@@ -10,6 +11,7 @@ import { genParams } from "../../helpers/fetcher";
 
 interface IIndexPageState {
   cases: Array<TCase>;
+  all_cases: Array<TCase>;
   per_page: number;
   query: string;
   occurred_after: string;
@@ -32,7 +34,8 @@ type TCaseRequestProps = {
 class IndexPage extends React.PureComponent<{}, IIndexPageState> {
   state: IIndexPageState = {
     cases: [],
-    per_page: 10,
+    all_cases: [],
+    per_page: 1000000000000000000,
     query: "",
     occurred_before: "",
     occurred_after: "",
@@ -42,13 +45,12 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
   };
 
   getCases(props: TCaseRequestProps) {
-    console.log("i'm here", props);
-
     get(`https://bikewise.org:443/api/v2/incidents?${genParams(props)}`).then(
       response => {
         console.log("cases:", response.incidents);
         this.setState({
-          cases: parseIncedents(response.incidents)
+          cases: parseIncedents(response.incidents),
+          all_cases: parseIncedents(response.incidents)
         });
       }
     );
@@ -74,20 +76,22 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
           occurred_after={this.state.occurred_after}
           occurred_before={this.state.occurred_before}
           findCases={({ query, occurred_after, occurred_before }) => {
-            console.log({ query, occurred_after, occurred_before });
-            this.setState({ query, occurred_after, occurred_before }, () =>
-              this.getCases({
-                query: this.state.query,
-                per_page: this.state.per_page,
-                occurred_before: this.state.occurred_before,
-                occurred_after: this.state.occurred_after,
-                page: this.state.page,
-                proximity: this.state.proximity,
-                incident_type: this.state.incident_type
-              })
+            this.setState(
+              { query, occurred_after, occurred_before, page: 1 },
+              () =>
+                this.getCases({
+                  query: this.state.query,
+                  per_page: this.state.per_page,
+                  occurred_before: this.state.occurred_before,
+                  occurred_after: this.state.occurred_after,
+                  page: 1,
+                  proximity: this.state.proximity,
+                  incident_type: this.state.incident_type
+                })
             );
           }}
         />
+        <CaseCount case_count={this.state.all_cases.length} />
         <CaseList cases={this.state.cases} />
       </React.Fragment>
     );

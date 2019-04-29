@@ -48,6 +48,7 @@ function request(url, method, json) {
     })
       .then(response => {
         clearTimeout(timeout);
+
         return response;
       })
       .then(response => checkStatus(response, resolve, reject))
