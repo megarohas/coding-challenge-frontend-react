@@ -33,7 +33,7 @@ function request(url, method, json) {
     const timeout = setTimeout(function() {
       reject(new Error("Request timed out"));
     }, CON_TIMEOUT);
-    fetch(url, {
+    return fetch(url, {
       ...{
         method,
         credentials: "same-origin",
