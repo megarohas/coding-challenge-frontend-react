@@ -31,7 +31,6 @@ class Paginator extends React.PureComponent<IPaginatorProps> {
 
   generateIndexes() {
     let pages = [];
-
     if (this.props.total_pages === 0) {
       return [];
     } else if (this.props.total_pages === 1) {
@@ -48,9 +47,6 @@ class Paginator extends React.PureComponent<IPaginatorProps> {
       return [this.props.page - 1, this.props.page, this.props.page + 1];
     }
     return [];
-    // let per_page: number = 3;
-    // let max: number = per_page * props.page;
-    // let min: number = props.per_page * props.page - props.per_page;
   }
 
   renderPages() {

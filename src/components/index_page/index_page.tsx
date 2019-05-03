@@ -125,6 +125,8 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
           }}
         />
         <CaseCount case_count={this.state.all_cases.length} />
+
+        <CaseList cases={this.state.cases} />
         <Paginator
           page={this.state.page}
           total_pages={this.state.total_pages}
@@ -139,7 +141,6 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
             })
           }
         />
-        <CaseList cases={this.state.cases} />
       </React.Fragment>
     );
   }

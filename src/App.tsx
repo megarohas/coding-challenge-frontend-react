@@ -3,28 +3,12 @@ import styled from "./theme";
 import { get } from "./helpers/fetcher.js";
 import IndexPage from "./components/index_page/index_page";
 import Header from "./components/header/header";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  RouteComponentProps
-} from "react-router-dom";
+import Case from "./components/case/case";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-interface ICaseProps {
-  id: string;
-}
-
-// ${(props: IHelloBlockProps) => `
-//   background: palevioletred;
-//   color: ${props.color};
-// `}
 const AppWrapper = styled.div`
   padding: 0% 10%;
 `;
-
-const Case = ({ match }: RouteComponentProps<ICaseProps>) => {
-  return <h2>This is a page for case with ID: {match.params.id} </h2>;
-};
 
 const AppRouter = (
   <div>
