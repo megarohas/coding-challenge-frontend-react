@@ -44,14 +44,19 @@ const CaseImg = styled.img`
 const CaseImgWrapper = styled.div`
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   height: 300px;
+  margin-top: 30px;
 `;
 const ImgDescWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+`;
+const DescWrapper = styled.div`
+  width: 100%;
+  margin-left: 30px;
 `;
 const MapWrapper = styled.div`
   width: 100%;
@@ -129,10 +134,10 @@ class Case extends React.PureComponent<ICaseProps, ICaseState> {
           <CaseImgWrapper>
             <CaseImg src={this.state.img} alt="N/A" />
           </CaseImgWrapper>
-          <div style={{ width: "100%" }}>
+          <DescWrapper>
             <h1>DESCRIPTION OF INCEDENT</h1>
             <h3>{this.state.description}</h3>
-          </div>
+          </DescWrapper>
         </ImgDescWrapper>
       </CaseWrapper>
     );
