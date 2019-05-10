@@ -63,11 +63,16 @@ class Paginator extends React.PureComponent<IPaginatorProps> {
     indexes = this.generateIndexes();
     return (
       indexes.map((item: number) => {
-        return this.renderPage({
-          page: item,
-          total_pages: this.props.total_pages,
-          setPage: this.props.setPage
-        });
+        return (
+          <div key={item}>
+            {" "}
+            {this.renderPage({
+              page: item,
+              total_pages: this.props.total_pages,
+              setPage: this.props.setPage
+            })}
+          </div>
+        );
       }) || []
     );
   }
