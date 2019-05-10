@@ -5,6 +5,7 @@ import { RouteComponentProps } from "react-router-dom";
 import { get } from "../../helpers/fetcher.js";
 //@ts-ignore
 import GoogleMap from "google-map-react";
+import PropTypes from "prop-types";
 
 interface ICaseRouteParamTypes {
   id: string;
@@ -69,6 +70,12 @@ type TMapMarker = {
 };
 
 class Case extends React.PureComponent<ICaseProps, ICaseState> {
+  static propTypes: { [key in keyof ICaseProps]: any } = {
+    match: PropTypes.object,
+    params: PropTypes.object,
+    id: PropTypes.string
+  };
+
   state = {
     title: "",
     address: "",
@@ -82,7 +89,6 @@ class Case extends React.PureComponent<ICaseProps, ICaseState> {
   componentDidMount() {
     let id: string = this.props.match.params.id;
     get(`https://bikewise.org:443/api/v2/incidents/${id}`).then(response => {
-      console.log(response);
       const _date: Date = new Date(response.incident.occurred_at * 1000);
       this.setState({
         title: response.incident.title,

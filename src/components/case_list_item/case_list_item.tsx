@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "../../theme";
 import { TCase } from "../../types";
+import PropTypes from "prop-types";
 
 interface ICaseListItemProps {
   case: TCase;
@@ -26,6 +27,9 @@ const CaseImg = styled.img`
 `;
 
 class CaseListItem extends React.PureComponent<ICaseListItemProps> {
+  static propTypes: { [key in keyof ICaseListItemProps]: any } = {
+    case: PropTypes.object
+  };
   render() {
     const _case: TCase = this.props.case;
     const _date: Date = new Date(_case.occurred_at * 1000);

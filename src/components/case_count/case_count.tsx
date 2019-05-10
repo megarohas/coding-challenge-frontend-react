@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "../../theme";
+import PropTypes from "prop-types";
 
 interface ICaseCountProps {
   case_count: number;
@@ -14,6 +15,9 @@ const CaseCountWrapper = styled.div`
 `;
 
 class CaseCount extends React.PureComponent<ICaseCountProps> {
+  static propTypes: { [key in keyof ICaseCountProps]: any } = {
+    case_count: PropTypes.number
+  };
   render() {
     return (
       <CaseCountWrapper>{`Total cases: ${

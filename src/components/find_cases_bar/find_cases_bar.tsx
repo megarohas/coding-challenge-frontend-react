@@ -4,6 +4,7 @@ import { TCase } from "../../types";
 import BeautyBtn from "../beauty_btn/beauty_btn";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import PropTypes from "prop-types";
 
 type TFindCasesProps = {
   query: string;
@@ -58,6 +59,12 @@ class FindCasesBar extends React.PureComponent<
   IFindCasesBarProps,
   IFindCasesBarState
 > {
+  static propTypes: { [key in keyof IFindCasesBarProps]: any } = {
+    query: PropTypes.string,
+    occurred_after: PropTypes.string,
+    occurred_before: PropTypes.string,
+    findCases: PropTypes.func
+  };
   state = {
     query: this.props.query,
     occurred_after: this.props.occurred_after,
@@ -78,17 +85,9 @@ class FindCasesBar extends React.PureComponent<
 
         <DateInputWrapper>
           <DatePicker
-            customInput={
-              <QueryInput
-                //value={this.state.occurred_after}
-                width="80%"
-                placeholder="from"
-              />
-            }
-            //value={this.state.occurred_after || "from"}
+            customInput={<QueryInput width="80%" placeholder="from" />}
             selected={new Date(this.state.occurred_after || "0")}
             onChange={e => {
-              console.log("e", e);
               e = e || new Date();
               this.setState({ occurred_after: e.toString() });
             }}
@@ -97,20 +96,9 @@ class FindCasesBar extends React.PureComponent<
         </DateInputWrapper>
         <DateInputWrapper>
           <DatePicker
-            customInput={
-              <QueryInput
-                //value={this.state.occurred_before}
-                width="80%"
-                //placeholder="from"
-                // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                //   this.setState({ occurred_before: e.target.value })
-                // }
-              />
-            }
-            //value={this.state.occurred_before}
+            customInput={<QueryInput width="80%" />}
             selected={new Date(this.state.occurred_before || "0")}
             onChange={e => {
-              console.log("e", e);
               e = e || new Date();
               this.setState({ occurred_before: e.toString() });
             }}

@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "../../theme";
 import BeautyBtn from "../beauty_btn/beauty_btn";
+import PropTypes from "prop-types";
 
 interface IPaginatorProps {
   page: number;
@@ -17,6 +18,12 @@ const PaginatorWrapper = styled.div`
 `;
 
 class Paginator extends React.PureComponent<IPaginatorProps> {
+  static propTypes: { [key in keyof IPaginatorProps]: any } = {
+    page: PropTypes.number,
+    total_pages: PropTypes.number,
+    setPage: PropTypes.func
+  };
+
   renderPage(props: IPaginatorProps) {
     return (
       <BeautyBtn
@@ -51,13 +58,11 @@ class Paginator extends React.PureComponent<IPaginatorProps> {
 
   renderPages() {
     let pages = new Array(3).fill(3);
-    console.log("pages", pages);
-    console.log("pages", pages);
+
     let indexes: Array<number> = [];
     indexes = this.generateIndexes();
     return (
       indexes.map((item: number) => {
-        console.log("page");
         return this.renderPage({
           page: item,
           total_pages: this.props.total_pages,
@@ -67,7 +72,6 @@ class Paginator extends React.PureComponent<IPaginatorProps> {
     );
   }
   render() {
-    console.log("this.props", this.props);
     return (
       <PaginatorWrapper>
         <BeautyBtn

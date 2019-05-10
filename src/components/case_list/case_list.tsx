@@ -2,12 +2,16 @@ import * as React from "react";
 import styled from "../../theme";
 import { TCase } from "../../types";
 import CaseListItem from "../case_list_item/case_list_item";
+import PropTypes from "prop-types";
 
 interface ICaseListProps {
   cases: Array<TCase>;
 }
 
 class CaseList extends React.PureComponent<ICaseListProps> {
+  static propTypes: { [key in keyof ICaseListProps]: any } = {
+    cases: PropTypes.array
+  };
   render() {
     return (
       <React.Fragment>

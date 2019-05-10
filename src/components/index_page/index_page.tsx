@@ -76,7 +76,6 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
     this.setState({ is_loading: true });
     get(`https://bikewise.org:443/api/v2/incidents?${genParams(props)}`)
       .then(response => {
-        console.log("cases:", response.incidents);
         let _cases: Array<TCase> = parseIncedents(response.incidents);
         this.setState({
           is_loading: false,

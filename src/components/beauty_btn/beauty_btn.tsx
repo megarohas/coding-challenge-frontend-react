@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "../../theme";
+import PropTypes from "prop-types";
 
 interface IBeautyBtnProps {
   value: string;
@@ -28,6 +29,12 @@ const BeautyBtnWrapper = styled.div`
 `;
 
 class BeautyBtn extends React.PureComponent<IBeautyBtnProps> {
+  static propTypes: { [key in keyof IBeautyBtnProps]: any } = {
+    value: PropTypes.string,
+    doAction: PropTypes.func,
+    inActive: PropTypes.bool
+  };
+
   render() {
     return (
       <BeautyBtnWrapper
