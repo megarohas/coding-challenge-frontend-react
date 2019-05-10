@@ -33,14 +33,15 @@ const QueryInput = styled.input`
   font-size: 20px;
   outline: none;
 `;
-const DateInput = styled.div`
+const DateInput = styled.input`
   display: flex;
   width: ${(props: any) => props.width};
-  padding: 5px 10px;
+  padding: 3px 10px;
   border: 3px solid black;
   font-family: inherit;
   font-size: 20px;
   outline: none;
+  margin-left: 5px;
 `;
 const FindCasesBarWrapper = styled.div`
   display: flex;
@@ -68,8 +69,8 @@ class FindCasesBar extends React.PureComponent<
 
   public static defaultProps = {
     query: "",
-    occurred_after: "",
-    occurred_before: "",
+    occurred_after: "0",
+    occurred_before: "0",
     findCases: () => {}
   };
   state = {
@@ -91,27 +92,40 @@ class FindCasesBar extends React.PureComponent<
         />
 
         <DateInputWrapper>
-          <DatePicker
-            customInput={<QueryInput width="80%" placeholder="from" />}
-            selected={new Date(this.state.occurred_after || "0")}
-            onChange={e => {
+          From
+          <DateInput
+            width="80%"
+            type="date"
+            onChange={(e: any) => {
               e = e || new Date();
-              this.setState({ occurred_after: e.toString() });
+              let value: string = Date.parse(e.target.value)
+                .toString()
+                .substr(0, Date.parse(e.target.value).toString().length - 3);
+
+              this.setState({
+                occurred_after: value
+              });
             }}
           />
-          <img src="https://icongr.am/material/calendar-multiselect.svg" />
         </DateInputWrapper>
         <DateInputWrapper>
-          <DatePicker
-            customInput={<QueryInput width="80%" />}
-            selected={new Date(this.state.occurred_before || "0")}
-            onChange={e => {
+          To
+          <DateInput
+            width="80%"
+            type="date"
+            onChange={(e: any) => {
               e = e || new Date();
-              this.setState({ occurred_before: e.toString() });
+              let value: string = Date.parse(e.target.value)
+                .toString()
+                .substr(0, Date.parse(e.target.value).toString().length - 3);
+
+              this.setState({
+                occurred_before: value
+              });
             }}
           />
-          <img src="https://icongr.am/material/calendar-multiselect.svg" />
         </DateInputWrapper>
+
         <BeautyBtn
           value="Find Cases"
           doAction={() => {
