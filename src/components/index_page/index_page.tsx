@@ -21,6 +21,8 @@ interface IIndexPageState {
   total_pages: number;
   proximity: string;
   incident_type: string;
+  is_loading: boolean;
+  is_error: boolean;
 }
 
 type TCaseRequestProps = {
@@ -65,15 +67,19 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
     occurred_after: "",
     page: 1,
     proximity: "52.517038,13.401267",
-    incident_type: "theft"
+    incident_type: "theft",
+    is_loading: true,
+    is_error: false
   };
 
   getCases(props: TCaseRequestProps) {
-    get(`https://bikewise.org:443/api/v2/incidents?${genParams(props)}`).then(
-      response => {
+    this.setState({ is_loading: true });
+    get(`https://bikewise.org:443/api/v2/incidents?${genParams(props)}`)
+      .then(response => {
         console.log("cases:", response.incidents);
         let _cases: Array<TCase> = parseIncedents(response.incidents);
         this.setState({
+          is_loading: false,
           total_pages: calcTotalPages({
             cases: _cases,
             per_page: this.state.per_page
@@ -85,8 +91,10 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
           }),
           all_cases: _cases
         });
-      }
-    );
+      })
+      .catch(err => {
+        this.setState({ is_error: true });
+      });
   }
 
   componentDidMount() {
@@ -124,22 +132,32 @@ class IndexPage extends React.PureComponent<{}, IIndexPageState> {
             );
           }}
         />
-        <CaseCount case_count={this.state.all_cases.length} />
-        <CaseList cases={this.state.cases} />
-        <Paginator
-          page={this.state.page}
-          total_pages={this.state.total_pages}
-          setPage={(page: number) =>
-            this.setState({
-              page,
-              cases: paginateCases({
-                cases: this.state.all_cases,
-                page: page,
-                per_page: this.state.per_page
-              })
-            })
-          }
-        />
+        {this.state.is_error ? (
+          <div>Error </div>
+        ) : this.state.is_loading ? (
+          <div>Loading ... </div>
+        ) : this.state.all_cases.length == 0 ? (
+          <div>No results</div>
+        ) : (
+          <React.Fragment>
+            <CaseCount case_count={this.state.all_cases.length} />
+            <CaseList cases={this.state.cases} />
+            <Paginator
+              page={this.state.page}
+              total_pages={this.state.total_pages}
+              setPage={(page: number) =>
+                this.setState({
+                  page,
+                  cases: paginateCases({
+                    cases: this.state.all_cases,
+                    page: page,
+                    per_page: this.state.per_page
+                  })
+                })
+              }
+            />
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
   }
