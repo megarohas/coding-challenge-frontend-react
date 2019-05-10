@@ -76,6 +76,12 @@ class Case extends React.PureComponent<ICaseProps, ICaseState> {
     id: PropTypes.string
   };
 
+  public static defaultProps = {
+    match: { params: { id: "" } },
+    params: { id: "" },
+    id: ""
+  };
+
   state = {
     title: "",
     address: "",

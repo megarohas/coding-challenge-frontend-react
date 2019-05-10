@@ -65,6 +65,13 @@ class FindCasesBar extends React.PureComponent<
     occurred_before: PropTypes.string,
     findCases: PropTypes.func
   };
+
+  public static defaultProps = {
+    query: "",
+    occurred_after: "",
+    occurred_before: "",
+    findCases: () => {}
+  };
   state = {
     query: this.props.query,
     occurred_after: this.props.occurred_after,

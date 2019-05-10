@@ -18,6 +18,11 @@ class CaseCount extends React.PureComponent<ICaseCountProps> {
   static propTypes: { [key in keyof ICaseCountProps]: any } = {
     case_count: PropTypes.number
   };
+
+  public static defaultProps = {
+    case_count: 0
+  };
+
   render() {
     return (
       <CaseCountWrapper>{`Total cases: ${

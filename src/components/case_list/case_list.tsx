@@ -12,6 +12,10 @@ class CaseList extends React.PureComponent<ICaseListProps> {
   static propTypes: { [key in keyof ICaseListProps]: any } = {
     cases: PropTypes.array
   };
+
+  public static defaultProps = {
+    cases: []
+  };
   render() {
     return (
       <React.Fragment>

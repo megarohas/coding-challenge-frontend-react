@@ -30,6 +30,17 @@ class CaseListItem extends React.PureComponent<ICaseListItemProps> {
   static propTypes: { [key in keyof ICaseListItemProps]: any } = {
     case: PropTypes.object
   };
+
+  public static defaultProps = {
+    case: {
+      title: "",
+      description: "",
+      id: 0,
+      thumbnail_img: "",
+      address: "",
+      occurred_at: 0
+    }
+  };
   render() {
     const _case: TCase = this.props.case;
     const _date: Date = new Date(_case.occurred_at * 1000);

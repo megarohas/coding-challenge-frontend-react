@@ -34,6 +34,11 @@ class BeautyBtn extends React.PureComponent<IBeautyBtnProps> {
     doAction: PropTypes.func,
     inActive: PropTypes.bool
   };
+  public static defaultProps = {
+    value: "",
+    doAction: () => {},
+    inActive: false
+  };
 
   render() {
     return (
