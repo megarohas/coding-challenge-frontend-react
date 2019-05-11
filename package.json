@@ -2,6 +2,7 @@
   "name": "coding-challenge-frontend-react-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://megarohas.github.io/coding-challenge-frontend-react",
   "dependencies": {
     "@types/jest": "^24.0.11",
     "@types/node": "^11.13.6",
@@ -20,6 +21,8 @@
     "typescript": "^3.4.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -33,5 +36,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "gh-pages": "^2.0.1"
+  }
 }
